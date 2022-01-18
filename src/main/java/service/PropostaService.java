@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 @Data
 @AllArgsConstructor
@@ -38,9 +39,11 @@ public class PropostaService {
         System.out.println ("********** Sign Payload: " + signPayload);
 
         var logging = new HttpLoggingInterceptor ( );
-        logging.level (HttpLoggingInterceptor.Level.NONE);
+        logging.level (HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient ( ).newBuilder ( )
                 .addInterceptor (logging)
+                .connectTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
                 .build ( );
 
         RequestBody requestBody = RequestBody.create (body, JSON);

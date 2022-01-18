@@ -12,6 +12,7 @@ import util.Assinador;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @NoArgsConstructor
 @Data
@@ -30,6 +31,8 @@ public class AuthorizationTokenService {
         logging.level (HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient ( ).newBuilder ( )
                 .addInterceptor (logging)
+                .connectTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
                 .build ( );
         RequestBody requestBody = new FormBody.Builder ( )
                 .add ("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer")

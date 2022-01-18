@@ -14,10 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-@AllArgsConstructor
 @Builder
-public class ProdutosService {
-
+@AllArgsConstructor
+public class GerarPACService {
     public static final MediaType JSON = MediaType.get ("application/json; charset=utf-8");
     private String endpoint;
     private final String timeStamp = ZonedDateTime.now ( ).truncatedTo (ChronoUnit.SECONDS).format (DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -30,8 +29,8 @@ public class ProdutosService {
     private String xBradAuth;
     private String propostaNum;
 
-    public String getProdutos() {
-        endpoint = "/cartoes/aquisicao/parceiros/v1/proposta/"+ propostaNum +"/oferta-produtos";
+    public String setDados() {
+        endpoint = "/cartoes/aquisicao/parceiros/v1/proposta/"+ propostaNum +"/pac";
         setPayload ();
         String signPayload = Assinador.Sign (ambiente.isProducao ( ), payload);
         System.out.println ("********** Sign Payload: " + signPayload);

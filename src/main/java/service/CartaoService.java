@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 @Data
 @Builder
@@ -39,6 +40,8 @@ public class CartaoService {
         logging.level (HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient ( ).newBuilder ( )
                 .addInterceptor (logging)
+                .connectTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
                 .build ( );
 
         RequestBody requestBody = RequestBody.create (body, JSON);

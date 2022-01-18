@@ -18,7 +18,7 @@ public class App {
         System.out.println ("Configuração do ambiente");
         System.out.println ("--------------------------------------------------------------------");
         Ambiente ambiente = new Ambiente ( );
-        ambiente.configuraProducao ();
+//        ambiente.configuraProducao ();
         System.out.println (ambiente);
         System.out.println ("----\n");
 
@@ -55,7 +55,7 @@ public class App {
         System.out.println ("Indentificação Cliente - " + ambiente.getAmbiente ( ));
         System.out.println ("--------------------------------------------------------------------");
         ClienteEntity cliente = ClienteEntity.builder ( )
-                .cpf ("28847301840")
+                .cpf ("56418048865")
                 .ddd (11)
                 .celular (999999999L)
                 .build ( );
@@ -119,7 +119,7 @@ public class App {
         List<Cartoes> cartoes = new ArrayList<> ( );
         cartoes.add (Cartoes.builder ( )
                 .diaVencimento (1)
-                .codigoProduto ("106048")
+                .codigoProduto ("106044")
                 .nomeImpressao ("Nadia S Oliveira")
                 .build ( ));
         CartoesRequest cartoesRequest = CartoesRequest.builder ( )
@@ -342,6 +342,29 @@ public class App {
                 .propostaNum (String.valueOf (propostaEntity.getNumeroProposta ( )))
                 .build();
         optinsService.setDados();
+        System.out.println ("----\n");
+
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("API Gerar PAC - "+ambiente.getAmbiente());
+        System.out.println("--------------------------------------------------------------------");
+        GerarPACRequest gerarPACRequest = GerarPACRequest.builder()
+                .canal (usuario.getCanal ( ))
+                .origem (usuario.getOrigem ( ))
+                .tipoPontoVenda (usuario.getTipoPontoVenda ( ))
+                .numeroPontoVenda (usuario.getNumeroPontoVenda ( ))
+                .cpfCnpj (cliente.getCpf ( ))
+                .build();
+        System.out.println ("********** Gerar PAC Request  " + gerarPACRequest);
+        String jsonGerarPAC = gson.toJson (gerarPACRequest);
+        System.out.println ("********** Json " + jsonGerarPAC);
+        GerarPACService gerarPACService = GerarPACService.builder()
+                .ambiente (ambiente)
+                .authorization (authorizationToken.getAccessToken ( ))
+                .body (jsonGerarPAC)
+                .xBradAuth (xBradSignature)
+                .propostaNum (String.valueOf (propostaEntity.getNumeroProposta ( )))
+                .build();
+        gerarPACService.setDados();
         System.out.println ("----\n");
 
         System.out.println("--------------------------------------------------------------------");
