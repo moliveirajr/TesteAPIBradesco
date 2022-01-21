@@ -55,7 +55,7 @@ public class App {
         System.out.println ("Indentificação Cliente - " + ambiente.getAmbiente ( ));
         System.out.println ("--------------------------------------------------------------------");
         ClienteEntity cliente = ClienteEntity.builder ( )
-                .cpf ("56418048865")
+                .cpf ("76564080611")
                 .ddd (11)
                 .celular (999999999L)
                 .build ( );
@@ -391,7 +391,5 @@ public class App {
                 .build();
         finalizarService.setDados();
         System.out.println ("----\n");
-
-
     }
 }
