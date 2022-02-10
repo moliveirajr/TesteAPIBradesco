@@ -55,7 +55,7 @@ public class App {
         System.out.println ("Indentificação Cliente - " + ambiente.getAmbiente ( ));
         System.out.println ("--------------------------------------------------------------------");
         ClienteEntity cliente = ClienteEntity.builder ( )
-                .cpf ("76564080611")
+                .cpf ("12956844890")
                 .ddd (11)
                 .celular (999999999L)
                 .build ( );
@@ -118,8 +118,8 @@ public class App {
         System.out.println ("--------------------------------------------------------------------");
         List<Cartoes> cartoes = new ArrayList<> ( );
         cartoes.add (Cartoes.builder ( )
-                .diaVencimento (1)
-                .codigoProduto ("106044")
+                .diaVencimento (29)
+                .codigoProduto ("106048")
                 .nomeImpressao ("Nadia S Oliveira")
                 .build ( ));
         CartoesRequest cartoesRequest = CartoesRequest.builder ( )
@@ -245,7 +245,7 @@ public class App {
                 .profissao (1)
                 .ddd (11)
                 .numero (995597656)
-                .renda (2000.00)
+                .renda (0.00)
                 .build ( );
         System.out.println ("********** Dados profissionais Request  " + dadosProfissionaisRequest);
         String jsonDadosProfissionais = gson.toJson (dadosProfissionaisRequest);

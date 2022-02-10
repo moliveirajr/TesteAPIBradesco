@@ -11,7 +11,7 @@ public class Ambiente {
     private boolean producao;
 
     public Ambiente() {
-        configuraHomolgacao ();
+        configuraHomolgacao();
     }
 
     public void configuraProducao() {
