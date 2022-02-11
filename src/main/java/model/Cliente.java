@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ClienteEntity {
+public class Cliente {
     private String cpf;
     private Integer ddd;
     private Long celular;
