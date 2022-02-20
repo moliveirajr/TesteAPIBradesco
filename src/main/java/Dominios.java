@@ -20,7 +20,6 @@ public class Dominios {
     private String authorization;
     private String xBradAuth;
 
-
     public void listaProfissoes() {
         var gson = new Gson();
         System.out.println ("--------------------------------------------------------------------");

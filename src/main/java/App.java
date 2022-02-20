@@ -1,4 +1,7 @@
 import com.google.gson.Gson;
+import exceptions.ErroAberturaPropostaException;
+import exceptions.ErroBradescoException;
+import lombok.SneakyThrows;
 import model.*;
 import service.AccessTokenService;
 import service.AuthorizationTokenService;
@@ -6,13 +9,13 @@ import service.AuthorizationTokenService;
 import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) throws IOException {
+      public static void main(String[] args) throws IOException {
 
-        Gson gson = new Gson ( );
+        Gson gson = new Gson();
 
-        System.out.println ("--------------------------------------------------------------------");
-        System.out.println ("Configura Usuário");
-        System.out.println ("--------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Configura Usuário");
+        System.out.println("--------------------------------------------------------------------");
         Usuario usuario = Usuario.builder()
                 .usuario("C05066794")
                 .canal(536)
@@ -20,80 +23,98 @@ public class App {
                 .tipoPontoVenda(1)
                 .numeroPontoVenda(12101)
                 .build();
-        System.out.println ("********** Usuário" + usuario);
+        System.out.println("********** Usuário" + usuario);
         System.out.println("----\n");
 
-        System.out.println ("--------------------------------------------------------------------");
-        System.out.println ("Indentificação Cliente");
-        System.out.println ("--------------------------------------------------------------------");
-        Cliente cliente = Cliente.builder ( )
-                .cpf ("12956844890")
-                .ddd (11)
-                .celular (999999999L)
-                .build ( );
-        System.out.println ("********** Cliente  " + cliente.toString ( ));
-        System.out.println ("----\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Indentificação Cliente");
+        System.out.println("--------------------------------------------------------------------");
+        Cliente cliente = Cliente.builder()
+                .cpf("12956844890")
+                .ddd(11)
+                .celular(999999999L)
+                .build();
+        System.out.println("********** Cliente  " + cliente.toString());
+        System.out.println("----\n");
 
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Configuração do ambiente");
         System.out.println("--------------------------------------------------------------------");
         Ambiente ambiente = new Ambiente();
-        ambiente.configuraProducao();
+//        ambiente.configuraProducao();
         System.out.println(ambiente);
         System.out.println("----\n");
 
-        System.out.println ("--------------------------------------------------------------------");
-        System.out.println ("Token de Autorização - Token server - " + ambiente.getAmbiente ( ));
-        System.out.println ("--------------------------------------------------------------------");
-        AuthorizationTokenService authorizationTokenService = new AuthorizationTokenService (ambiente);
-        authorizationTokenService.setAuthorizationToken ( );
-        AuthorizationToken authorizationToken = authorizationTokenService.getAuthorizationToken ( );
-        System.out.println (authorizationToken);
-        System.out.println ("----\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Token de Autorização - Token server - " + ambiente.getAmbiente());
+        System.out.println("--------------------------------------------------------------------");
+        AuthorizationTokenService authorizationTokenService = new AuthorizationTokenService(ambiente);
+        authorizationTokenService.setAuthorizationToken();
+        AuthorizationToken authorizationToken = authorizationTokenService.getAuthorizationToken();
+        System.out.println(authorizationToken);
+        System.out.println("----\n");
 
-        System.out.println ("--------------------------------------------------------------------");
-        System.out.println ("Login origem - " + ambiente.getAmbiente ( ));
-        System.out.println ("--------------------------------------------------------------------");
-        String json = gson.toJson (usuario);
-        System.out.println ("********** Json " + json);
-        var accessTokenService = AccessTokenService.builder ( )
-                .ambiente (ambiente)
-                .authorization (authorizationToken.getAccessToken ( ))
-                .body (json)
-                .build ( );
-        accessTokenService.setBradSignature ( );
-        BradSignature bradSignature = accessTokenService.getBradSignature ( );
-        String xBradSignature = bradSignature.getToken ( ).getAccessToken ( );
-        System.out.println ("********** AccessToken  " + bradSignature);
-        System.out.println ("********** X-Brad-Signature " + xBradSignature);
-        System.out.println ("----\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Login origem - " + ambiente.getAmbiente());
+        System.out.println("--------------------------------------------------------------------");
+        String json = gson.toJson(usuario);
+        System.out.println("********** Json " + json);
+        var accessTokenService = AccessTokenService.builder()
+                .ambiente(ambiente)
+                .authorization(authorizationToken.getAccessToken())
+                .body(json)
+                .build();
+        accessTokenService.setBradSignature();
+        BradSignature bradAuth = accessTokenService.getBradSignature();
+        String xBradAuth = bradAuth.getToken().getAccessToken();
+        System.out.println("********** AccessToken  " + bradAuth);
+        System.out.println("********** X-Brad-Auth " + xBradAuth);
+        System.out.println("----\n");
 
         switch (args[0]) {
-            case "c":
+            case "consulta":
                 Consulta consulta = null;
                 if (args.length == 2) {
                     consulta = Consulta.builder()
+                            .usuario(usuario)
+                            .ambiente(ambiente)
+                            .authorization(authorizationToken.getAccessToken())
+                            .xBradAuth(xBradAuth)
                             .cpf(args[1])
                             .build();
                 } else if (args.length == 3) {
                     consulta = Consulta.builder()
+                            .usuario(usuario)
+                            .ambiente(ambiente)
+                            .authorization(authorizationToken.getAccessToken())
+                            .xBradAuth(xBradAuth)
                             .cpf(args[1])
-                            .proposta(args[2])
+                            .proposta(Long.valueOf(args[2]))
                             .build();
                 }
                 if (consulta != null) consulta.consultaProposta();
                 break;
-            case "p":
-                Proposta.executaProposta();
+            case "proposta":
+                var proposta = Proposta.builder()
+                        .usuario(usuario)
+                        .ambiente(ambiente)
+                        .authorization(authorizationToken.getAccessToken())
+                        .xBradAuth(xBradAuth)
+                        .cliente(cliente)
+                        .build();
+                try {
+                    proposta.executaProposta();
+                } catch ( ErroBradescoException e) {
+                    e.printStackTrace();
+                }
                 break;
-            case "d":
+            case "dominios":
                 var dominios = Dominios.builder()
                         .ambiente(ambiente)
                         .authorization(authorizationToken.getAccessToken())
-                        .xBradAuth(xBradSignature)
+                        .xBradAuth(xBradAuth)
                         .build();
                 dominios.listaProfissoes();
-
         }
 
 //        Foto foto = new Foto ();

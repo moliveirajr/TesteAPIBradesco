@@ -1,9 +1,11 @@
 package service;
 
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import model.Ambiente;
 import model.BradSignature;
+import model.ErroBradescoEntity;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import util.Assinador;
@@ -20,15 +22,17 @@ public class BradescoClient {
     public static final MediaType JSON = MediaType.get ("application/json; charset=utf-8");
     private final String timeStamp = ZonedDateTime.now ( ).truncatedTo (ChronoUnit.SECONDS).format (DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     private final Long nonce = System.currentTimeMillis ( );
+
     private String endpoint;
     private Ambiente ambiente;
-    private BradSignature bradSignature;
+    private String bradSignature;
     private String authorization;
     private String body;
+
     private String payload;
     private String xBradAuth;
 
-    public String getDados() {
+    public Response getDados() {
         setPayload ( );
         String signPayload = Assinador.Sign (ambiente.isProducao ( ), payload);
         System.out.println ("********** Sign Payload: " + signPayload);
@@ -56,16 +60,13 @@ public class BradescoClient {
                 .post (requestBody)
                 .build ( );
 
-        String retorno ="";
+        Response response=null;
         try {
-            Response response = client.newCall (request).execute ( );
-            retorno = response.body ( ).string ( );
-            System.out.println ("********** Response: " + response.toString ( ));
-            System.out.println ("********** Response Body: \n" + retorno);
+            response =  client.newCall (request).execute ( );
         } catch (IOException e) {
-            e.printStackTrace ( );
+            e.printStackTrace();
         }
-        return retorno;
+        return response;
     }
 
     private void setPayload() {
