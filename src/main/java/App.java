@@ -21,7 +21,8 @@ public class App {
                 .canal(536)
                 .origem(145)
                 .tipoPontoVenda(1)
-                .numeroPontoVenda(12101)
+                .numeroPontoVenda(12783)
+//                .numeroPontoVenda(12101)
                 .build();
         System.out.println("********** Usuário" + usuario);
         System.out.println("----\n");
@@ -30,6 +31,7 @@ public class App {
         System.out.println("Indentificação Cliente");
         System.out.println("--------------------------------------------------------------------");
         Cliente cliente = Cliente.builder()
+//                .cpf("43459612894") Leo
                 .cpf("12956844890")
                 .ddd(11)
                 .celular(999999999L)
@@ -41,7 +43,7 @@ public class App {
         System.out.println("Configuração do ambiente");
         System.out.println("--------------------------------------------------------------------");
         Ambiente ambiente = new Ambiente();
-//        ambiente.configuraProducao();
+        ambiente.configuraProducao();
         System.out.println(ambiente);
         System.out.println("----\n");
 
@@ -105,7 +107,7 @@ public class App {
                 try {
                     proposta.executaProposta();
                 } catch ( ErroBradescoException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
                 break;
             case "dominios":

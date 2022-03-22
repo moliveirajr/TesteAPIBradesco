@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="App" />
+        <module name="TesteAPIBradesco" />
       </profile>
     </annotationProcessing>
   </component>
