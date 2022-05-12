@@ -46,7 +46,7 @@ public class Consulta {
         var consulta = consultaService.consulta();
 
         StatusProposta[] propostas = gson.fromJson(consulta,StatusProposta[].class);
-        String[] statusString = {"Aprovada","Em análise","Negada","Cancelada","Aguardando Retorno Aceite"};
+        String[] statusString = {"Aprovada","Em análise","Negada","Cancelada","Aguardando Retorno Aceite","Em Digitacao","Pendente","Em reanalise","Consulta previa","Erro efetivacao"};
         for (StatusProposta proposta: propostas) {
             System.out.println("\n--------------");
             System.out.println("     "+proposta.getNumeroproposta());

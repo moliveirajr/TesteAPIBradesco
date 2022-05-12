@@ -1,12 +1,18 @@
 import com.google.gson.Gson;
-import exceptions.ErroAberturaPropostaException;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import exceptions.ErroBradescoException;
-import lombok.SneakyThrows;
 import model.*;
+import org.bson.Document;
 import service.AccessTokenService;
 import service.AuthorizationTokenService;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class App {
       public static void main(String[] args) throws IOException {
@@ -21,17 +27,26 @@ public class App {
                 .canal(536)
                 .origem(145)
                 .tipoPontoVenda(1)
-                .numeroPontoVenda(12783)
-//                .numeroPontoVenda(12101)
+//               .numeroPontoVenda(12783)
+                .numeroPontoVenda(12101)
+//                .numeroPontoVenda(12273)
                 .build();
         System.out.println("********** Usuário" + usuario);
+
         System.out.println("----\n");
+          System.out.println("--------------------------------------------------------------------");
+          System.out.println("Conexão mongodb");
+          System.out.println("--------------------------------------------------------------------");
+          MongoClient mongoClient = new MongoClient();
+          System.out.println("********** Conexão mongodb" + usuario);
+          System.out.println("----\n");
 
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Indentificação Cliente");
         System.out.println("--------------------------------------------------------------------");
         Cliente cliente = Cliente.builder()
 //                .cpf("43459612894") Leo
+//                .cpf("16899971844")
                 .cpf("12956844890")
                 .ddd(11)
                 .celular(999999999L)
@@ -117,6 +132,16 @@ public class App {
                         .xBradAuth(xBradAuth)
                         .build();
                 dominios.listaProfissoes();
+                break;
+            case "confere":
+                var confere = ConfereStatusProposta.builder()
+                        .usuario(usuario)
+                        .ambiente(ambiente)
+                        .authorization(authorizationToken.getAccessToken())
+                        .xBradAuth(xBradAuth)
+                        .mongoClient(mongoClient)
+                        .build();
+                confere.listaSituacao();
         }
 
 //        Foto foto = new Foto ();

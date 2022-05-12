@@ -6,6 +6,7 @@ import lombok.Builder;
 import model.Ambiente;
 import model.BradSignature;
 import okhttp3.MediaType;
+import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import util.Assinador;
@@ -13,6 +14,7 @@ import util.HttpGetWithEntity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -58,10 +60,14 @@ public class ConsultaService {
             httpGetWithEntity.setEntity(new StringEntity(body));
 
             var response = httpClient.execute(httpGetWithEntity);
-            var bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            HttpEntity httpEntity = response.getEntity();
+            String responseBody = "";
+            if (httpEntity!=null) {
+                var bufferedReader = new BufferedReader(new InputStreamReader(httpEntity.getContent()));
+                responseBody = bufferedReader.lines().collect(Collectors.joining());
+                bufferedReader.close();
+            }
 
-            var responseBody = bufferedReader.lines().collect(Collectors.joining());
-            bufferedReader.close();
 
             System.out.println ("/n********** Response Body");
             System.out.println(responseBody);
