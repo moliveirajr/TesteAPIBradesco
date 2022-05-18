@@ -7,15 +7,14 @@ import com.mongodb.util.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import model.Ambiente;
-import model.BradSignature;
-import model.StatusProposta;
-import model.Usuario;
+import model.*;
 import model.requests.ConsultaRequest;
 import org.bson.Document;
 import service.AccessTokenService;
+import service.AuthorizationTokenService;
 import service.ConsultaService;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -34,7 +33,8 @@ public class ConfereStatusProposta {
     private String cpf;
     private Long proposta;
 
-    public void listaSituacao() {
+
+    public void listaSituacao() throws IOException {
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Conferência da Situação da proposta (todos) - " + ambiente.getAmbiente());
         System.out.println("--------------------------------------------------------------------");
@@ -45,9 +45,28 @@ public class ConfereStatusProposta {
         Iterator iterator = iterable.iterator();
 
         ArrayList<String> confereProposta = new ArrayList<>();
-
+        Integer contador =0;
 
         while (iterator.hasNext()) {
+            contador++;
+//            if (contador == 6) break;
+            if ((contador%2000) == 0) {
+                AuthorizationTokenService authorizationTokenService = new AuthorizationTokenService(ambiente);
+                authorizationTokenService.setAuthorizationToken();
+                AuthorizationToken authorizationToken = authorizationTokenService.getAuthorizationToken();
+                authorization = authorizationToken.getAccessToken();
+                Gson gson = new Gson();
+                String json = gson.toJson(usuario);
+                System.out.println("********** Json " + json);
+                var accessTokenService = AccessTokenService.builder()
+                        .ambiente(ambiente)
+                        .authorization(authorizationToken.getAccessToken())
+                        .body(json)
+                        .build();
+                accessTokenService.setBradSignature();
+                BradSignature bradAuth = accessTokenService.getBradSignature();
+                String xBradAuth = bradAuth.getToken().getAccessToken();
+            }
             Document document = (Document) iterator.next();
             Document cliente = (Document) document.get("cliente");
             Document operador = (Document) document.get("operador");
