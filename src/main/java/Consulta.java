@@ -37,7 +37,7 @@ public class Consulta {
         String body = gson.toJson(consultaRequest);
 
         var consultaService = ConsultaService.builder()
-                .endpoint("/cartoes/aquisicao/parceiros/v1/proposta")
+                .endpoint("/cartoes/aquisicao/parceiros/v2/proposta")
                 .ambiente(ambiente)
                 .authorization(authorization)
                 .xBradAuth(xBradAuth)
@@ -45,12 +45,12 @@ public class Consulta {
                 .build();
         var consulta = consultaService.consulta();
 
-        StatusProposta[] propostas = gson.fromJson(consulta,StatusProposta[].class);
-        String[] statusString = {"Aprovada","Em análise","Negada","Cancelada","Aguardando Retorno Aceite","Em Digitacao","Pendente","Em reanalise","Consulta previa","Erro efetivacao"};
-        for (StatusProposta proposta: propostas) {
+        StatusProposta[] propostas = gson.fromJson(consulta, StatusProposta[].class);
+        String[] statusString = {"Aprovada", "Em análise", "Negada", "Cancelada", "Aguardando Retorno Aceite", "Em Digitacao", "Pendente", "Em reanalise", "Consulta previa", "Erro efetivacao"};
+        for (StatusProposta proposta : propostas) {
             System.out.println("\n--------------");
-            System.out.println("     "+proposta.getNumeroproposta());
-            System.out.println("     "+proposta.getSituacao()+" - "+statusString[proposta.getSituacao()-1]);
+            System.out.println("     " + proposta.getNumeroproposta());
+            System.out.println("     " + proposta.getSituacao() + " - " + statusString[proposta.getSituacao() - 1]);
             System.out.println("-------------");
         }
 

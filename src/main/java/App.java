@@ -1,21 +1,15 @@
 import com.google.gson.Gson;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import exceptions.ErroBradescoException;
 import model.*;
-import org.bson.Document;
 import service.AccessTokenService;
 import service.AuthorizationTokenService;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 public class App {
-      public static void main(String[] args) throws IOException {
+
+
+    public static void main(String[] args) {
 
         Gson gson = new Gson();
 
@@ -27,27 +21,44 @@ public class App {
                 .canal(536)
                 .origem(145)
                 .tipoPontoVenda(1)
-//               .numeroPontoVenda(12783)
+//                .numeroPontoVenda(12783)
+//                .numeroPontoVenda(13118)
                 .numeroPontoVenda(12101)
+//                .numeroPontoVenda(13109)
 //                .numeroPontoVenda(12273)
+//                .numeroPontoVenda(13145)
+//                .numeroPontoVenda(12962)
+//                .numeroPontoVenda(13128)
+//                .numeroPontoVenda(12792)
+//                .numeroPontoVenda(12264)
+//                .numeroPontoVenda(12268)
+//                .numeroPontoVenda(13146)
+//               .numeroPontoVenda(13123)
                 .build();
         System.out.println("********** Usuário" + usuario);
 
-        System.out.println("----\n");
-          System.out.println("--------------------------------------------------------------------");
-          System.out.println("Conexão mongodb");
-          System.out.println("--------------------------------------------------------------------");
-          MongoClient mongoClient = new MongoClient();
-          System.out.println("********** Conexão mongodb" + usuario);
-          System.out.println("----\n");
+//        System.out.println("----\n");
+//        System.out.println("--------------------------------------------------------------------");
+//        System.out.println("Conexão mongodb");
+//        System.out.println("--------------------------------------------------------------------");
+//        MongoClient mongoClient = new MongoClient();
+//        System.out.println("********** Conexão mongodb" + usuario);
+//        System.out.println("----\n");
 
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Indentificação Cliente");
         System.out.println("--------------------------------------------------------------------");
         Cliente cliente = Cliente.builder()
-//                .cpf("43459612894") Leo
-//                .cpf("16899971844")
-                .cpf("12956844890")
+//                .cpf("43459612894") // Leo
+//                .cpf("27576746840") // Dionel
+//                .cpf("10906195454")
+//                .cpf("12956844890")
+                .cpf("09643014827") // Arlete
+//                .cpf("38417766200")
+//                .cpf("28847301840")
+//                .cpf("18550367893") // Mãe Karina
+//                .cpf("01152607146")
+//                .cpf("02899226231")
                 .ddd(11)
                 .celular(999999999L)
                 .build();
@@ -66,7 +77,12 @@ public class App {
         System.out.println("Token de Autorização - Token server - " + ambiente.getAmbiente());
         System.out.println("--------------------------------------------------------------------");
         AuthorizationTokenService authorizationTokenService = new AuthorizationTokenService(ambiente);
-        authorizationTokenService.setAuthorizationToken();
+        try {
+            authorizationTokenService.setAuthorizationToken();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         AuthorizationToken authorizationToken = authorizationTokenService.getAuthorizationToken();
         System.out.println(authorizationToken);
         System.out.println("----\n");
@@ -121,8 +137,11 @@ public class App {
                         .build();
                 try {
                     proposta.executaProposta();
-                } catch ( ErroBradescoException e) {
+                } catch (ErroBradescoException e) {
 //                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
                 break;
             case "dominios":
@@ -134,17 +153,20 @@ public class App {
                 dominios.listaProfissoes();
                 break;
             case "confere":
-                var confere = ConfereStatusProposta.builder()
-                        .usuario(usuario)
-                        .ambiente(ambiente)
-                        .authorization(authorizationToken.getAccessToken())
-                        .xBradAuth(xBradAuth)
-                        .mongoClient(mongoClient)
-                        .build();
-                confere.listaSituacao();
+//                var confere = ConfereStatusProposta.builder()
+//                        .usuario(usuario)
+//                        .ambiente(ambiente)
+//                        .authorization(authorizationToken.getAccessToken())
+//                        .xBradAuth(xBradAuth)
+//                        .mongoClient(mongoClient)
+//                        .build();
+//                try {
+//                    confere.listaSituacao();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
         }
-
-//        Foto foto = new Foto ();
 
 //        System.out.println ("--------------------------------------------------------------------");
 //        System.out.println ("API Abertura de proposta - " + ambiente.getAmbiente ( ));
@@ -200,7 +222,7 @@ public class App {
 //        System.out.println ("--------------------------------------------------------------------");
 //        System.out.println ("API Cartões - " + ambiente.getAmbiente ( ));
 //        System.out.println ("--------------------------------------------------------------------");
-//        List<Cartoes> cartoes = new ArrayList<> ( );
+//        List<Cartoes> cartoes = new ArrayList<>( );
 //        cartoes.add (Cartoes.builder ( )
 //                .diaVencimento (29)
 //                .codigoProduto ("106048")
@@ -226,7 +248,7 @@ public class App {
 //                .build ( );
 //        cartaoService.setCartao ( );
 //        System.out.println ("----\n");
-//
+
 //        System.out.println ("--------------------------------------------------------------------");
 //        System.out.println ("API Dados cartões adicionais - " + ambiente.getAmbiente ( ));
 //        System.out.println ("--------------------------------------------------------------------");
@@ -343,7 +365,7 @@ public class App {
 //                .build ( );
 //        dadosProfissionaisService.setDados ();
 //        System.out.println ("----\n");
-//
+////        Foto foto = new Foto ();
 //        System.out.println("--------------------------------------------------------------------");
 //        System.out.println("API Foto - "+ambiente.getAmbiente());
 //        System.out.println("--------------------------------------------------------------------");

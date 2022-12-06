@@ -9,7 +9,6 @@ import model.AuthorizationToken;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import util.Assinador;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,52 +27,52 @@ public class AuthorizationTokenService {
 
     public void setAuthorizationToken() throws IOException {
         var logging = new HttpLoggingInterceptor();
-        logging.level (HttpLoggingInterceptor.Level.NONE);
-        OkHttpClient client = new OkHttpClient ( ).newBuilder ( )
-                .addInterceptor (logging)
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .addInterceptor(logging)
                 .connectTimeout(40, TimeUnit.SECONDS)
                 .readTimeout(40, TimeUnit.SECONDS)
-                .build ( );
-        RequestBody requestBody = new FormBody.Builder ( )
-                .add ("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer")
-                .add ("assertion", getAssertion ( ))
-                .build ( );
-        Request request = new Request.Builder ( )
-                .addHeader ("alg", ambiente.getAlgoritmo ( ))
-                .addHeader ("typ", "JWT")
-                .url (ambiente.getBaseURL ( ) + ENDPOINT)
-                .post (requestBody)
-                .build ( );
-        Response response = client.newCall (request).execute ( );
-        String json = response.body ().string ();
-        System.out.println (json);
-        Gson gson = new Gson ();
-        authorizationToken = gson.fromJson (json,AuthorizationToken.class);
+                .build();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer")
+                .add("assertion", getAssertion())
+                .build();
+        Request request = new Request.Builder()
+                .addHeader("alg", ambiente.getAlgoritmo())
+                .addHeader("typ", "JWT")
+                .url(ambiente.getBaseURL() + ENDPOINT)
+                .post(requestBody)
+                .build();
+        Response response = client.newCall(request).execute();
+        String json = response.body().string();
+        System.out.println(json);
+        Gson gson = new Gson();
+        authorizationToken = gson.fromJson(json, AuthorizationToken.class);
     }
 
     private String getAssertion() {
-        String aud = ambiente.getBaseURL ( ) + ENDPOINT;
-        Long iat = System.currentTimeMillis ( ) / 1_000;
-        Long exp = (System.currentTimeMillis ( ) / 1_000) + 2_592_000;
-        Long jti = System.currentTimeMillis ( );
+        String aud = ambiente.getBaseURL() + ENDPOINT;
+        Long iat = System.currentTimeMillis() / 1_000;
+        Long exp = (System.currentTimeMillis() / 1_000) + 2_592_000;
+        Long jti = System.currentTimeMillis();
 
-        Map<String, Object> mapHeader = Map.of (
-                "alg", ambiente.getAlgoritmo ( ),
+        Map<String, Object> mapHeader = Map.of(
+                "alg", ambiente.getAlgoritmo(),
                 "typ", "JWT");
 
-        Map<String, String> mapClaims = Map.of (
+        Map<String, String> mapClaims = Map.of(
                 "aud", aud,
-                "sub", ambiente.getClientId ( ),
-                "iat", String.valueOf (iat),
-                "exp", String.valueOf (exp),
-                "jti", String.valueOf (jti),
+                "sub", ambiente.getClientId(),
+                "iat", String.valueOf(iat),
+                "exp", String.valueOf(exp),
+                "jti", String.valueOf(jti),
                 "ver", "1.1");
-        String assertion = Jwts.builder ( )
-                .setHeader (mapHeader)
-                .setClaims (mapClaims)
-                .signWith (Assinador.getPrivateKey (ambiente.isProducao ( ))).compact ( );
+        String assertion = Jwts.builder()
+                .setHeader(mapHeader)
+                .setClaims(mapClaims)
+                .signWith(Assinador.getPrivateKey(ambiente.isProducao())).compact();
 
-        System.out.println ("**** Assertion: "+assertion );
+        System.out.println("**** Assertion: " + assertion);
         return assertion;
     }
 }

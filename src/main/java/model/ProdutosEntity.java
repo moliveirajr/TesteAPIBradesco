@@ -10,11 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ProdutosEntity {
-  private List<Produto> produtos;
-  private Double valorLimiteAprovadoCompra;
-  private Double valorLimiteAprovadoSaque;
-  private Double valorLimiteAprovadoParcela;
-  private Integer quantidadeMaximaCartoesAdicionaisProposta;
-  private List<Optins> optins;
+    private List<Produto> produtos;
+    private Double valorLimiteAprovadoCompra;
+    private Double valorLimiteAprovadoSaque;
+    private Double valorLimiteAprovadoParcela;
+    private Integer quantidadeMaximaCartoesAdicionaisProposta;
+    private List<Optins> optins;
 }
 

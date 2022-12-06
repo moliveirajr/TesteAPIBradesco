@@ -36,45 +36,44 @@ public class Assinador {
             "unwRU2SQt+U/6V/C33tt2CrsmRbwSaPhRu+BYtyTt7zVXP+7mPOvUm63uqpTpF8I\n" +
             "I5+v7O0zlrOcNWTMhiFLlbYqYQ==\n" +
             "-----END PRIVATE KEY-----\n";
-
-    private static final String privateKeyProd = "-----BEGIN PRIVATE KEY-----\n" +
-            "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDAl3ru5P4qw68p\n" +
-            "XLsmtn45s6TWBbM6TeSS8+Rr797pAelTruuJZMaswVMOUWWtd0wiT8aFCIQ3eIqG\n" +
-            "v7aQOheSqjxVLuNiVsHW6DBlkf5tqRNZx1VFFQaPUjhQLnF8KB9YFJh5dYe0SccU\n" +
-            "lfUEo3DB2m9Rlchn1zNlK2iguEycyDwbTJ21WK+OlTiFxLmdETu5tTfHcurSULlh\n" +
-            "ThgnK5GDfz2S7lRVm4jptQn0XRdnfuvU3ITN/FHahfTu7nPhXPbKeGcicUCMEDlc\n" +
-            "rmMgPWiDKk098Hv3umYhpRX8zEzaeJq0Jm++Mt0mqo9BUqe2nnEMcfhURmktuqUZ\n" +
-            "UBztziOvAgMBAAECggEATvEIa8mjQQYq0yp2b/zXqnEvPKbjex+YdH/R/kg5N4sY\n" +
-            "B7woQY30PbWUhMbqhXrj0yCd/8Oo5k/bgDYu79lP9kcfKc9pVtK2648K32dDQdHO\n" +
-            "47roAcQHh1GtUXhn/fs4NdNjWE3LjSO8nXyGDRutSVhuzqM1nRLBt1NetJo2lQBs\n" +
-            "UoHQQ4oFxYctnKvbxD3/2Al98tbHQXztQLzkVrBrp9ZowV8CmhidAgLL+Tp1JFCc\n" +
-            "2SI7REYafo7gWgTOM2iAGG6WmZvs+zY5XPJ8aQ4AxC+84hM0R6vfFLpCbBv8pSTO\n" +
-            "hI7dJQhbso88OOuGKkEYEVqlU+uaOH4s4g2C5ZISeQKBgQDfIMgNyYaSGkv8668U\n" +
-            "ojf2XVqbGI1JzexBzTk6Gfchg9H0ZbWrdN+e2/IuuXC6jWuLueLfsEZICc7N/CEm\n" +
-            "gKEpSGcMnNUatlgfxafWGJ4wia2arDxca07WSoCbb/NGxIyBWlU1Ff9GZqN/tkog\n" +
-            "cBeUQCo7l9wyMZoNoMQbx00exQKBgQDc9wdSwVzUEbqeEzud3qISxDnZPf12Uino\n" +
-            "olPF6p+UAnCfbuwY4/tORemuWpsbl/0VZNSldr6ssWWYvsbvKfMNTSuxmorADgxM\n" +
-            "1IrIk5oOIJLc/23nbbHMk+9R4gMSXkwMdBjR8bW7G3KseC0aZjOWdDe9XAzDjI7I\n" +
-            "FwY5ogof4wKBgE23klbTCc9b33nR8aKjOhDSxVteOuApHJBy1er53k1LJ9cTkiqN\n" +
-            "Q9KGU52Ys74Wwg3iCjbVpDU1TVYL6tQJW5kQgewvuD5couc2JlZ5LqhDXDeSpFeg\n" +
-            "fM5BFviNDtRoY3QurZ0W81pnJ621Ja6UvHHDw7IMHANTqY/znjr6uU7tAoGBALw5\n" +
-            "KWHTGNIFMCSLWZNHHGREBssJRSlPICfsbtP+4mRgF7OX90HUojOw1jgRMmM0+v8I\n" +
-            "XyN7nTzZ+CM/D5KW91VzUS7+6AZlcRDZVEc7hFVYZgIfC23CQVx0/72OevNgpANP\n" +
-            "ufzMmvOBlBNaY4FDYdpdsUV6bdz9lHrZMhJR97HlAoGBAN5UlTu2k+XO0EHdBvSa\n" +
-            "sxYImzTBuSBdlAFC+6fEOu/hU1QXvBV5X1Mv7HgUi5BctJfeh1QfStk09wHMII4E\n" +
-            "4E5xl3F28aDpw+4OykLade/B58ZQzjZywKsxQkxPnwRG0Wu9TvT69/xoA1KmAk88\n" +
-            "YsdAeALvKLEsI1stndR2cckg\n" +
+    private static final String privateKeyProd = "-----BEGIN PRIVATE KEY-----\n"+
+            "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDJlJkpvbWxh7bD\n"+
+            "cCmAyIZdzjH2/GEyEy/K2nrpuMPrhCfuYFmGdrdhNJCtjN+ex4wsi64tIZw//buJ\n"+
+            "mngoJO9nS+GzlJ7xb96n9XxVBfLNiVdeWna5+uDz9mc9vzOmdAy9fnw0l5RtbnAu\n"+
+            "HIDLoG+O7xM74pmHTMsqAEPVwiGHuq7xPLQEjKsHQou9YV52iv7c/NpAQXPTWVJ8\n"+
+            "JOhV9LJK7mH1/Li2IqsdPtoCBovGqO6/gTict+w/KGFpnmNwi4a123PbT083uPUf\n"+
+            "Msx4MtvZDzBR9nkQxXwojYgU5lpFW/nNCOFMNRDQPRi5DZvCcGMscPTYbWFQpcwQ\n"+
+            "DBbaVwY7AgMBAAECggEAAYtwKdMe7rXuhZlF1PHOB2JkHNNneN3CxcteZvOxtKVP\n"+
+            "m2w4Y2cxFb9nkgNJV2S9Qz4fkildLCePZbxXfV9DFZSN4M8CJMsWdrNsrEe3/TE3\n"+
+            "O5OpfNiNgfEUCEB/bqAaO0pNcCdVNApFNWU/uDYjhLUT5A3JeJe/2s0jt+8D5Y/A\n"+
+            "j/mwG5cozz4HlieUvLycNIlGaiH77oSynzoBBPhvWS4H6iWeqPQFkk9BdQmdSOeg\n"+
+            "BK0XELXAk9QEt8QWnMtEL1MvD/hKjZuH9lmRGk/LC6JQMdOUWIPTKuxWNikPt16H\n"+
+            "EcHkWo649wYjQhv2PV8uQzuYFmqkdKZnd+HPY2dXkQKBgQDPK0A1BLarQsFzE2GV\n"+
+            "aPap7xUh6v1Z69u18cCxDqGpQlSKanwltQUoiaCx/BgVvDPvXauA88FrbCV5TQ5f\n"+
+            "hf5uUYbJkXg+N7XfFAgaFo+zyKCtqIyOQ2O/o51sfeGVkx+pN13sxGuvE4QXoQjV\n"+
+            "bcEYxSdsBEJ3ggJRgXjLfwDSWQKBgQD5GCIs/Y8KeLwCclmo4Nl8AQf2Nq5nVcl+\n"+
+            "ZswUuujX4q+CbUGQkkCepfSGsEF9N/kqdL4YNT02gvtJr+ET4W/yrKFW0FZxZU8O\n"+
+            "Ju8HRFQQZck7h8hwt+KPlc8BvyZ5pPWkjJ0illOq3RdEdbOlvXr41eAoRn2pOY4c\n"+
+            "T1NVv7FCswKBgBOe9grPcnmP7gB3InPjKBF6Klc3CV293+ZAik56o0cDmDwvz6hG\n"+
+            "l8F6H3Ub+i/8zjJqfbbN31DMQlRVvvm/GBTctdZbZ7cE0b3aCNZnsp6Fbupjn0RO\n"+
+            "D6Fz3pIK7hWbhJEjREsLY2OGhqkyQELujS5KZexuDtmAv7V2fLlRQwOpAoGBAJPd\n"+
+            "96uteVRGB5WMPB08HN633foSy8Ub79jRPSSxL7e4IWfTY7BmoWWMLnQl/TpQF+FU\n"+
+            "G+RS9lt9tZ4wgfRDRylPwRa/5hC6iwtjoVE3BpAVXDeyixIelqeVzqTCzBw6CHf9\n"+
+            "4Om/QzuSs1U4acRhjrZYgBBoiAAE4o97p4SnnppxAoGAJsEQart/rCRNKvf9mNUb\n"+
+            "vGFc8bJeirKBLS7Y+SElP0UQCnGVJ44GMWGXLSyeYN0qBnKk9IxaqFrsngK3pTA+\n"+
+            "FFmSmTtHRK0SeW2tMbNp+A6Nk+pgV2lm+qqg5c3/jAYlJVezhES9SYTSyEMz04Y1\n"+
+            "oZqYiY0/o39tdO5KbDxrP8E=\n"+
             "-----END PRIVATE KEY-----\n";
 
     public static PrivateKey getPrivateKey(Boolean isProducao) {
         // TODO: 15/12/2021 colocar chaves no objeto ambiente
 
         PrivateKey keyBradesco = null;
-        String privateKey=  (isProducao) ? privateKeyProd : privateKeyHomolg;
+        String privateKey = (isProducao) ? privateKeyProd : privateKeyHomolg;
         try {
-            keyBradesco = getPrivateKeyFromString (privateKey);
+            keyBradesco = getPrivateKeyFromString(privateKey);
         } catch (IOException | GeneralSecurityException e) {
-            e.printStackTrace ( );
+            e.printStackTrace();
         }
 
         return keyBradesco;
@@ -84,9 +83,9 @@ public class Assinador {
 
         String signed = "";
         try {
-            signed = RSA.sign (getPrivateKey (isProducao), message);
+            signed = RSA.sign(getPrivateKey(isProducao), message);
         } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException | UnsupportedEncodingException e) {
-            e.printStackTrace ( );
+            e.printStackTrace();
         }
         return signed;
     }

@@ -1,11 +1,8 @@
 package service;
 
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import model.Ambiente;
-import model.BradSignature;
-import model.ErroBradescoEntity;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import util.Assinador;
@@ -19,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 @Builder
 @AllArgsConstructor
 public class BradescoClient {
-    public static final MediaType JSON = MediaType.get ("application/json; charset=utf-8");
-    private final String timeStamp = ZonedDateTime.now ( ).truncatedTo (ChronoUnit.SECONDS).format (DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    private final Long nonce = System.currentTimeMillis ( );
+    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private final String timeStamp = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    private final Long nonce = System.currentTimeMillis();
 
     private String endpoint;
     private Ambiente ambiente;
@@ -33,36 +30,36 @@ public class BradescoClient {
     private String xBradAuth;
 
     public Response getDados() {
-        setPayload ( );
-        String signPayload = Assinador.Sign (ambiente.isProducao ( ), payload);
-        System.out.println ("********** Sign Payload: " + signPayload);
+        setPayload();
+        String signPayload = Assinador.Sign(ambiente.isProducao(), payload);
+        System.out.println("********** Sign Payload: " + signPayload);
 
-        var logging = new HttpLoggingInterceptor( );
-        logging.level (HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient ( ).newBuilder ( )
-                .addInterceptor (logging)
+        var logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .addInterceptor(logging)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .build ( );
+                .build();
 
-        RequestBody requestBody = RequestBody.create (body, JSON);
+        RequestBody requestBody = RequestBody.create(body, JSON);
 
-        Request request = new Request.Builder ( )
-                .addHeader ("Content-Type", "application/json")
-                .addHeader ("Authorization", "Bearer " + authorization)
-                .addHeader ("X-Brad-Signature", signPayload)
-                .addHeader ("X-Brad-Nonce", String.valueOf (nonce))
-                .addHeader ("X-Brad-timestamp", timeStamp)
-                .addHeader ("X-Brad-Algorithm", ambiente.getAlgoritmo ( ))
-                .addHeader ("access-token", ambiente.getClientId ( ))
-                .addHeader ("X-Brad-Auth", "Bearer " + xBradAuth)
-                .url (ambiente.getBaseURL ( ) + endpoint)
-                .post (requestBody)
-                .build ( );
+        Request request = new Request.Builder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + authorization)
+                .addHeader("X-Brad-Signature", signPayload)
+                .addHeader("X-Brad-Nonce", String.valueOf(nonce))
+                .addHeader("X-Brad-timestamp", timeStamp)
+                .addHeader("X-Brad-Algorithm", ambiente.getAlgoritmo())
+                .addHeader("access-token", ambiente.getClientId())
+                .addHeader("X-Brad-Auth", "Bearer " + xBradAuth)
+                .url(ambiente.getBaseURL() + endpoint)
+                .post(requestBody)
+                .build();
 
-        Response response=null;
+        Response response = null;
         try {
-            response =  client.newCall (request).execute ( );
+            response = client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,17 +67,17 @@ public class BradescoClient {
     }
 
     private void setPayload() {
-        StringBuilder payload = new StringBuilder ( )
-                .append ("POST").append ("\n")
-                .append (endpoint).append ("\n")
-                .append ("\n")
-                .append (body).append ("\n")
-                .append (authorization).append ("\n")
-                .append (nonce).append ("\n")
-                .append (timeStamp).append ("\n")
-                .append (ambiente.getAlgoritmo ( ));
-        System.out.println ("********** Payload");
-        System.out.println (payload);
-        this.payload = String.valueOf (payload);
+        StringBuilder payload = new StringBuilder()
+                .append("POST").append("\n")
+                .append(endpoint).append("\n")
+                .append("\n")
+                .append(body).append("\n")
+                .append(authorization).append("\n")
+                .append(nonce).append("\n")
+                .append(timeStamp).append("\n")
+                .append(ambiente.getAlgoritmo());
+        System.out.println("********** Payload");
+        System.out.println(payload);
+        this.payload = String.valueOf(payload);
     }
 }

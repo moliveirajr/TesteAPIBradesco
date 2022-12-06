@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class ConsultaService {
-    public static final MediaType JSON = MediaType.get ("application/json; charset=utf-8");
-    private final String timeStamp = ZonedDateTime.now ( ).truncatedTo (ChronoUnit.SECONDS).format (DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    private final Long nonce = System.currentTimeMillis ( );
+    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private final String timeStamp = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    private final Long nonce = System.currentTimeMillis();
 
     private String endpoint;
     private Ambiente ambiente;
@@ -40,10 +40,10 @@ public class ConsultaService {
     public String consulta() {
         var gson = new Gson();
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("Consulta de Propostas -  "+ambiente.getAmbiente());
+        System.out.println("Consulta de Propostas -  " + ambiente.getAmbiente());
         System.out.println("--------------------------------------------------------------------");
-        setPayload ( );
-        String signPayload = Assinador.Sign (ambiente.isProducao ( ), payload);
+        setPayload();
+        String signPayload = Assinador.Sign(ambiente.isProducao(), payload);
 //        System.out.println ("********** Sign Payload: " + signPayload);
 
         try (var httpClient = HttpClientBuilder.create().build()) {
@@ -62,14 +62,14 @@ public class ConsultaService {
             var response = httpClient.execute(httpGetWithEntity);
             HttpEntity httpEntity = response.getEntity();
             String responseBody = "";
-            if (httpEntity!=null) {
+            if (httpEntity != null) {
                 var bufferedReader = new BufferedReader(new InputStreamReader(httpEntity.getContent()));
                 responseBody = bufferedReader.lines().collect(Collectors.joining());
                 bufferedReader.close();
             }
 
 
-            System.out.println ("/n********** Response Body");
+            System.out.println("/n********** Response Body");
             System.out.println(responseBody);
 
             return responseBody;
@@ -81,17 +81,17 @@ public class ConsultaService {
     }
 
     private void setPayload() {
-        StringBuilder payload = new StringBuilder ( )
-                .append ("GET").append ("\n")
-                .append (endpoint).append ("\n")
-                .append ("\n")
-                .append (body).append ("\n")
-                .append (authorization).append ("\n")
-                .append (nonce).append ("\n")
-                .append (timeStamp).append ("\n")
-                .append (ambiente.getAlgoritmo ( ));
-        System.out.println ("********** Payload");
-        System.out.println (payload);
-        this.payload = String.valueOf (payload);
+        StringBuilder payload = new StringBuilder()
+                .append("GET").append("\n")
+                .append(endpoint).append("\n")
+                .append("\n")
+                .append(body).append("\n")
+                .append(authorization).append("\n")
+                .append(nonce).append("\n")
+                .append(timeStamp).append("\n")
+                .append(ambiente.getAlgoritmo());
+        System.out.println("********** Payload");
+        System.out.println(payload);
+        this.payload = String.valueOf(payload);
     }
 }

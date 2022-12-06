@@ -14,10 +14,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthorizationToken {
 
-    @Expose private final UUID uuid = UUID.randomUUID ( );
-    @Expose private final LocalDateTime created = LocalDateTime.now ( );
-    @SerializedName("access_token") private String accessToken;
-    @SerializedName("token_type")private String tokenType;
-    @SerializedName("expires_in")private Long expiresIn;
-    @SerializedName("scope")private String scope;
+    @Expose
+    private final UUID uuid = UUID.randomUUID();
+    @Expose
+    private final LocalDateTime created = LocalDateTime.now();
+    @SerializedName("access_token")
+    private String accessToken;
+    @SerializedName("token_type")
+    private String tokenType;
+    @SerializedName("expires_in")
+    private Long expiresIn;
+    @SerializedName("scope")
+    private String scope;
 }
